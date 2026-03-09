@@ -99,7 +99,7 @@ async function updateAssassinIntentInFirebase(isActive) {
         
 
         if (Number(updatedFields.currentPd.integerValue) < 1) updatedFields.currentPd.integerValue = "1";
-        if (Number(updatedFields.maxPd.integerValue) < 1) updatedFields.maxPd.integerValue = "1";
+        if (Number(updatedFields.currentPv.integerValue) < 1) updatedFields.currentPv.integerValue = "1";
 
         // Find and update the assassin intent item in inventory
         const inventory = updatedFields.inventory?.arrayValue?.values || [];

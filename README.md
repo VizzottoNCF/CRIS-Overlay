@@ -32,8 +32,13 @@ Uma overlay personalizada para OBS Studio que integra com o CRIS (sistema de fic
 
 ### Configuração do Código
 - Abra a pasta do overlay no aplicativo Visual Studio Code e baixe a extensão "Live Server" para editar o projeto
+- Configurações `index.html`
+    - Preencha o nome do seu personagem na página HTML
+    ```html
+    <h1 id="character-name">NOME PERSONAGEM</h1>
+    ```
 - Configurações `stats.js`
-    - Linha 24 -> Você precisa substituir o final da URL com o ID do seu personagem
+    - Linha 25 -> Você precisa substituir o final da URL com o ID do seu personagem
     ```js
     API_URL: "https://firestore.googleapis.com/v1/projects/seu-projeto/databases/(default)/documents/characters/SEU-ID"
     ```
