@@ -69,8 +69,7 @@ function handleAssassinIntentClick() {
     App.state.assassinIntentActive = !App.state.assassinIntentActive;
     
     // Update button UI
-    const button = App.elements.assassinIntentButton;
-    button.textContent = App.state.assassinIntentActive ? "DESLIGAR" : "LIGAR";
+    updateAssassinIntentButton();
     
     // Update Firebase data
     if (IntencaoAssassina) { updateAssassinIntentInFirebase(App.state.assassinIntentActive); }
@@ -163,9 +162,7 @@ async function updateAssassinIntentInFirebase(isActive) {
         console.error('Error updating Firebase:', error);
         // Revert UI if update failed
         App.state.assassinIntentActive = !isActive;
-        if (App.elements.assassinIntentButton) {
-            App.elements.assassinIntentButton.textContent = App.state.assassinIntentActive ? "DESLIGAR" : "LIGAR";
-        }
+        updateAssassinIntentButton();
     }
 }
 
@@ -174,6 +171,12 @@ function updateStatus(currentPV, maximumPV, currentPD) {
     App.elements.currPV.textContent = currentPV;
     App.elements.maxPV.textContent = maximumPV;
     App.elements.currPD.textContent = currentPD;
+}
+
+function updateAssassinIntentButton() {
+    if (App.elements.assassinIntentButton) {
+        App.elements.assassinIntentButton.textContent = App.state.assassinIntentActive ? "RESISTIR" : "CEDER";
+    }
 }
 
 function updateTabTitle(newTitle) {
@@ -247,7 +250,7 @@ async function fetchCharacter() {
             const isEquipped = assassinIntent.mapValue.fields.equipped?.booleanValue || false;
             App.state.assassinIntentActive = isEquipped;
                 
-            App.elements.assassinIntentButton.textContent = isEquipped ? "DESLIGAR" : "LIGAR";
+            updateAssassinIntentButton();
         }
         
 
