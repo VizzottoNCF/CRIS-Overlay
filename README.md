@@ -8,9 +8,11 @@ Uma overlay personalizada para OBS Studio que integra com o CRIS (sistema de fic
 
 - **Status em Tempo Real**: Exibe PV (Pontos de Vida) atual e máximo, PD (Pontos de Esforço) atual e o Nome do Personagem
 - **Barra de Vida Dinâmica**: Barra de progresso que muda de cor conforme a quantidade de vida
+- **Portrait de personagem**: Display de ícone do personagem 
 - **(HEXATOMBE) Mecânica de Intenção Assassina**: Botão interativo para ativar/desativar a forma suprema:
   - Altera o nome do personagem na ficha entre as formas (Stager ↔ Jester)
   - Ajusta PV, PD e bônus de defesa automaticamente
+  - Altera as imagens do Portrait do site
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -38,11 +40,16 @@ Uma overlay personalizada para OBS Studio que integra com o CRIS (sistema de fic
     <h1 id="character-name">NOME PERSONAGEM</h1>
     ```
 - Configurações `stats.js`
-    - Linha 25 -> Você precisa substituir o final da URL com o ID do seu personagem
+    - Linha 26 -> Você precisa substituir o final da URL com o ID do seu personagem
     ```js
     API_URL: "https://firestore.googleapis.com/v1/projects/seu-projeto/databases/(default)/documents/characters/SEU-ID"
     ```
     ![Configurações da Barra de Vida](Previews/CRIS-ID.gif)
+    - Linha 205 -> Para usar as imagens de portrait do site, você precisa colocar a imagem na pasta do projeto e alterar o valor da variável dessa linha (Ex: App.elements.characterPortrait.src = "Previews/MeuPortrait.png";)
+    ```js
+    App.elements.characterPortrait.src = assassinIntent ? "Previews/blank2.png" : "Previews/blank.png";
+    ```
+        - Certifique que a imagem é quadrada (mesma quantia de pixels em largura e altura)
 - Configurações `styles.css` (apenas se for usar o nome do personagem pelo site)
     - Caso queira usar o overlay para mostrar o nome do personagem, será necessário alterar as propriedades do ID #character-name
     ```css
@@ -63,7 +70,9 @@ Uma overlay personalizada para OBS Studio que integra com o CRIS (sistema de fic
 ### Configuração do OBS
 - (Barra de Vida + PD) No OBS, crie uma fonte "Navegador" na sua cena, utilizando o link do site que foi aberto pelo Live Server, com as dimensões 330 de Largura e 100 de Altura
 ![Configurações da Barra de Vida](Previews/OBS-navegador.png)
-- (Nome) No OBS, crie uma fonte "Navegador" na sua cena, utilizando o link do site que foi aberto pelo Live Server, com as dimensões ~600 de Largura e ~400 de Altura (as dimensões ideais podem variar dependendo do tamanho do nome do seu personagem).
+- (Portrait) No OBS, crie uma fonte "Navegador" na sua cena, utilizando o link do site que foi aberto pelo Live Server, com as dimensões 512 de Largura e 612 de Altura.
+    - Para "recortar" a fonte de um jeito que apenas a imagem apareça, basta segurar `Alt` e ajustar as dimensões. 
+- (Nome) No OBS, crie uma fonte "Navegador" na sua cena, utilizando o link do site que foi aberto pelo Live Server, com as dimensões ~600 de Largura e ~900 de Altura (as dimensões ideais podem variar dependendo do tamanho do nome do seu personagem).
     - Para "recortar" a fonte de um jeito que apenas o nome apareça, basta segurar `Alt` e diminuir a imagem pelo topo 
 ![Configurações do Nome](Previews/OBS-nome.gif)
 
@@ -74,11 +83,16 @@ Uma overlay personalizada para OBS Studio que integra com o CRIS (sistema de fic
     ```js
     const IntencaoAssassina = false; // true = função ligada, false = função desligada
     ```
-    - Linha 93 -> Você precisa alterar os valores para serem seu nome na forma de intenção, e na forma padrão (ex: "Mutilador Noturno" : "Aguiar")
+    - Linha 94 -> Você precisa alterar os valores para serem seu nome na forma de intenção, e na forma padrão (ex: "Mutilador Noturno" : "Aguiar")
     ```js
     updatedFields.name.stringValue = isActive ? "NOME DE INTENCAO" : "NOME PADRAO";
     ```
-    - Linha 207 até 219 -> Essa parte corresponde ao CSS do nome de cada versão, ela deve ser editada à gosto assim como na configuração original do CSS. O bloco de cima corresponde a forma de intenção assassina, e o bloco de baixo corresponde a forma padrão.
+    - Linha 205 -> Para trocar entre as imagens de portrait, basta manter no mesmo padrão que já está no código. Com a primeira imagem sendo a versão normal e a segunda sendo a de intenção. (Ex: App.elements.characterPortrait.src = assassinIntent ? "Previews/Intencao.ong" : "Previews/Normal.png";)
+    ```js
+    App.elements.characterPortrait.src = assassinIntent ? "Previews/blank2.png" : "Previews/blank.png";
+    ```
+        - Certifique que a imagem é quadrada (mesma quantia de pixels em largura e altura)
+    - Linha 212 até 224 -> Essa parte corresponde ao CSS do nome de cada versão, ela deve ser editada à gosto assim como na configuração original do CSS. O bloco de cima corresponde a forma de intenção assassina, e o bloco de baixo corresponde a forma padrão.
     ```js
     if (assassinIntent === true) {
         element.style.fontFamily = 'onryou';

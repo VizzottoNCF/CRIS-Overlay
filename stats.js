@@ -97,8 +97,6 @@ async function updateAssassinIntentInFirebase(isActive) {
         updatedFields.currentPd.integerValue = String(parseInt(updatedFields.currentPd.integerValue, 10) + (isActive ? 4 : -10));
         updatedFields.maxPd.integerValue = String(parseInt(updatedFields.maxPd.integerValue, 10) + (isActive ? 10 : -10));
         updatedFields.bonusDefense.integerValue = String(parseInt(updatedFields.bonusDefense.integerValue, 10) + (isActive ? 10 : -10));
-        
-        App.elements.characterPortrait.src = isActive ? "Previews/blank2.png" : "Previews/blank.png";
 
         if (Number(updatedFields.currentPd.integerValue) < 1) updatedFields.currentPd.integerValue = "1";
         if (Number(updatedFields.currentPv.integerValue) < 1) updatedFields.currentPv.integerValue = "1";
