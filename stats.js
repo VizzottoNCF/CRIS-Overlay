@@ -8,7 +8,8 @@ const App = {
         currPD: null,
         assassinIntentButton: null,
         lifeBarFill: null,
-        characterName: null
+        characterName: null,
+        characterPortrait: null
     },
     
     // Data state
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
     App.elements.assassinIntentButton = document.getElementById("assassinIntentButton");
     App.elements.lifeBarFill = document.querySelector('.life-bar-fill');
     App.elements.characterName = document.getElementById("character-name");
+    App.elements.characterPortrait = document.getElementById("character-portrait");
     
     
     // Log which elements exist on this page
@@ -96,6 +98,7 @@ async function updateAssassinIntentInFirebase(isActive) {
         updatedFields.maxPd.integerValue = String(parseInt(updatedFields.maxPd.integerValue, 10) + (isActive ? 10 : -10));
         updatedFields.bonusDefense.integerValue = String(parseInt(updatedFields.bonusDefense.integerValue, 10) + (isActive ? 10 : -10));
         
+        App.elements.characterPortrait.src = isActive ? "Previews/blank2.png" : "Previews/blank.png";
 
         if (Number(updatedFields.currentPd.integerValue) < 1) updatedFields.currentPd.integerValue = "1";
         if (Number(updatedFields.currentPv.integerValue) < 1) updatedFields.currentPv.integerValue = "1";
@@ -201,6 +204,7 @@ function updateLifeBar(percentage) {
 
 function updateCharacterName(name, assassinIntent) {
     const element = App.elements.characterName;
+    App.elements.characterPortrait.src = assassinIntent ? "Previews/blank2.png" : "Previews/blank.png";
     
     if (!element) return;
     
