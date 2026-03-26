@@ -213,13 +213,13 @@ function updateCharacterName(name, assassinIntent) {
     
     if (assassinIntent === true) {
         element.style.fontFamily = 'onryou';
-        element.style.background = '-webkit-linear-gradient(#e80000, #ff0303)';
+        element.style.background = '-webkit-linear-gradient( #e80000, #ff0303)';
         element.style.webkitBackgroundClip = 'text';
         element.style.letterSpacing = '0.2em';
         element.style.fontSize = '144px';
     } else {
         element.style.fontFamily = 'echoes';
-        element.style.background = '-webkit-linear-gradient(#afe7e8, #8b8b8b)';
+        element.style.background = '-webkit-linear-gradient( #afe7e8, #8b8b8b)';
         element.style.webkitBackgroundClip = 'text';
         element.style.letterSpacing = '0.12em';
         element.style.fontSize = '144px';
